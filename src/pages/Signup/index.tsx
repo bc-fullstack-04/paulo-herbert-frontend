@@ -1,18 +1,19 @@
-import React, { FormEvent, useState } from 'react'
-import Input from '../../components/Input'
-import { api } from '../../services/apiService'
+import { FormEvent, useState } from 'react'
+import logo from '../../assets/logo.svg';
+import { user_api } from '../../services/apiService'
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
+import { InputForm } from '@/components/custom/Input';
+import { Link } from 'react-router-dom';
 
 export function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [tel, setTel] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function handleSigup(event : FormEvent) {
+  async function handleSigup(event: FormEvent) {
     setLoading(true);
     const toastId = toast.loading("Criando conta...");
     event.preventDefault();
@@ -20,45 +21,47 @@ export function Signup() {
     const data = {
       name,
       email,
-      tel,
       password
     };
 
-    console.log(data);
-
-    await api.post("/api/v1/user/signup", data)
-    .then(resp => {
-      console.log(resp.data);
-      toast.dismiss(toastId);
-      toast.success("Conta criada com sucesso!");
-      setLoading(false);
-    }).catch(err => {
-      setLoading(false);
-      console.log(err);
-    });
+    await user_api.post("users/create",data)
+      .then(resp => {
+        console.log(resp.data);
+        toast.dismiss(toastId);
+        toast.success("Conta criada com sucesso!");
+        setLoading(false);
+      }).catch(err => {
+        setLoading(false);
+        toast.dismiss(toastId);
+        toast.error("Falha ao criar a conta");
+        console.log(err);
+      });
   }
 
   return (
-    <main className="w-full h-screen flex items-center justify-center bg-fundo bg-cover bg-no-repeat">
-      <div className="flex flex-col bg-white rounded-md h-fit w-full max-w-[320px] items-center p-10 shadow-md">
-        <h1 className="text-2xl font-bold">Inscreva-se</h1>
-        <form onSubmit={handleSigup} className="flex flex-col w-full mt-8 gap-2">
-          <Input type='text' onChange={event => setName(event.target.value)}>Nome</Input>
-          <Input type='email' required onChange={event => setEmail(event.target.value)}>Email</Input>
-          <Input type='tel' onChange={event => setTel(event.target.value)}>Telefone</Input>
-          <Input type='password' required onChange={event => setPassword(event.target.value)}>Senha</Input>
+    <main className=" h-screen bg-fundo bg-cover bg-no-repeat">
+      <div className='h-screen backdrop-blur-md backdrop-brightness-50 flex items-center justify-center '>
+        <div className="flex flex-col bg-white rounded-md h-fit w-96 items-center p-10 shadow-md">
+          <img src={logo} className="h-12" />
+          <h1 className="text-3xl font-medium">Criar conta</h1>
+          <form onSubmit={handleSigup} className="flex flex-col w-full mt-7 gap-2">
+            <InputForm type='text' onChange={event => setName(event.target.value)}>Nome Completo</InputForm>
+            <InputForm type='email' required onChange={event => setEmail(event.target.value)}>Email</InputForm>
+            <InputForm type='password' required onChange={event => setPassword(event.target.value)}>Senha</InputForm>
 
-          { loading ? 
-            <Button disabled>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Carregando...
-            </Button>
-            :
-            <Button type='submit' disabled={false} className="bg-zinc-900 text-white">
-              Inscrever-se
-            </Button>
-          }
-        </form>
+            {loading ?
+              <Button className='text-white bg-black h-12' disabled>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Carregando...
+              </Button>
+              :
+              <Button type='submit' className=" text-lg bg-zinc-900 rounded-2xl text-white h-12">
+                Criar Conta
+              </Button>
+            }
+          </form>
+          <p className='mt-7 text-sm font-normal text-[#686677]'>Já tem uma conta ? <Link to="/login" className='text-[#100F14] font-bold underline'>Entrar</Link></p>
+        </div>
       </div>
     </main>
   )
