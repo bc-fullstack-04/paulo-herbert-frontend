@@ -1,9 +1,8 @@
 import ReactDOM from 'react-dom/client'
-import './global.css';
+import '../app/globals.css';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Page02 } from './pages/Navegation/Page02';
 import { ErrorPage } from './pages/Navegation/Error';
 import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';

@@ -19,6 +19,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         'fundo': 'url("src/assets/init_background.jpg")',
+        'dash': 'url("src/assets/dashboard.jpg")'
       },
       colors: {
         border: "hsl(var(--border))",

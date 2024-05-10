@@ -1,5 +1,5 @@
 import { UserModel } from "@/models/UserModel";
-import { user_api } from "@/services/apiService";
+import { album_api, user_api } from "@/services/apiService";
 import { createContext, useCallback, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
@@ -36,6 +36,7 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
     }
  
     user_api.defaults.headers.common.Authorization = `Basic ${respAuth.data.token}`;
+    album_api.defaults.headers.common.Authorization = `Basic ${respAuth.data.token}`;
     const respUserInfo = await user_api.get(`/users/${respAuth.data.id}`);
 
     if(respUserInfo instanceof Error) {

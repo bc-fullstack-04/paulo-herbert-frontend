@@ -33,6 +33,19 @@
       --ring: 224 71.4% 4.1%;
 
       --radius: 0.5rem;
+        background-color: #f3f3f8;
+      
+        font-family: Poppins;
+        line-height: 1.5;
+      
+        margin: 0 auto;
+        border: 0;
+        padding: 0;
+      
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .dark {

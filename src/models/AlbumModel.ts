@@ -1,4 +1,4 @@
-export class AlbumModel {
+export interface AlbumModel {
   albumType: string
   artists: Artist[]
   externalUrls: ExternalUrls

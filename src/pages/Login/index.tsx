@@ -2,7 +2,7 @@ import{ FormEvent, useState } from 'react'
 import logo from '../../assets/logo.svg';
 import {InputForm } from '@/components/custom/Input';
 import { useAuth } from '@/hooks/UseAuth';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { ButtonForm } from '@/components/custom/ButtonForm';
 import { Loader2 } from 'lucide-react';
