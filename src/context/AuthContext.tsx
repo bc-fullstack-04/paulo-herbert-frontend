@@ -24,11 +24,14 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
     if(data.id) {
       setIsAuthenticated(true);
       setUserData(data);
+      user_api.defaults.headers.common.Authorization = `Basic ${data.token}`;
+      album_api.defaults.headers.common.Authorization = `Basic ${data.token}`;
     }
     //Logout();
   }, []);
 
   const Login = useCallback(async (email: string, password: string) => {
+    console.log("login func")
     const respAuth = await user_api.post('/users/auth', {email, password});
 
     if(respAuth instanceof Error) {
@@ -43,7 +46,7 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
       return respUserInfo.message;
     }
 
-    localStorage.setItem('@Auth.Data', JSON.stringify(respUserInfo.data));
+    localStorage.setItem('@Auth.Data', JSON.stringify(respAuth.data));
     setUserData(respUserInfo.data);
     setIsAuthenticated(true);
   }, []);

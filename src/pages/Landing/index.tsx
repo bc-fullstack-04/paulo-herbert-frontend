@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 export function Landing() {
   return (
     <>
-
       <main className='bg-fundo bg-cover bg-no-repeat'>
         <header className='px-[100px] py-3 flex justify-between backdrop-blur-lg backdrop-brightness-50 bg-white bg-opacity-30'>
           <div className='text-white flex gap-2 items-center'>

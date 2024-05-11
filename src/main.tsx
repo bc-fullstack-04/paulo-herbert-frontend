@@ -23,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path='/login' element={<Login/>} /> 
         <Route path='' element={<PrivateRoutes />}>
             <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/albums' element={<div>Teste</div>} />
         </Route> 
         </Routes>
       </BrowserRouter>

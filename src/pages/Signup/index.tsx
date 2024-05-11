@@ -5,13 +5,16 @@ import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { InputForm } from '@/components/custom/Input';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/UseAuth';
 
 export function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const {login} = useAuth();
+  const navigate= useNavigate();
 
   async function handleSigup(event: FormEvent) {
     setLoading(true);
@@ -24,18 +27,19 @@ export function Signup() {
       password
     };
 
-    await user_api.post("users/create",data)
-      .then(resp => {
-        console.log(resp.data);
+    user_api.post("users/create",data)
+      .then(() => {
         toast.dismiss(toastId);
         toast.success("Conta criada com sucesso!");
         setLoading(false);
-      }).catch(err => {
-        setLoading(false);
+        login(data.email,data.password);
+        setTimeout(()=>navigate("/dashboard"),1000)
+      }).catch(() => {
         toast.dismiss(toastId);
         toast.error("Falha ao criar a conta");
-        console.log(err);
+        setLoading(false)
       });
+      
   }
 
   return (

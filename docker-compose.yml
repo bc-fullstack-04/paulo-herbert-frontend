@@ -33,6 +33,7 @@ services:
       - POSTGRES_USER=bootcamp
       - POSTGRES_PASSWORD=bootcamppass
       - POSTGRES_DATABASE=bootcamp
+      - RABBIT_HOST=rabbitmq_bootcamp
     depends_on:
       - postgres_bootcamp
     networks:
@@ -50,6 +51,7 @@ services:
       - POSTGRES_USER=bootcamp
       - POSTGRES_PASSWORD=bootcamppass
       - POSTGRES_DATABASE=bootcamp
+      - RABBIT_HOST=rabbitmq_bootcamp
     depends_on:
       - postgres_bootcamp
     networks:
