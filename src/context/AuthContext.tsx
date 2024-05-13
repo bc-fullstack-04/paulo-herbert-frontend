@@ -1,7 +1,7 @@
 import { UserModel } from "@/models/UserModel";
 import { album_api, user_api } from "@/services/apiService";
 import { createContext, useCallback, useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 interface AuthContextModel extends UserModel {
   isAuthenticated: boolean;
@@ -18,14 +18,16 @@ interface Props {
 export const AuthProvider: React.FC<Props> = ({children}) => {
   const [userData, setUserData] = useState<UserModel>();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const data: UserModel = JSON.parse(localStorage.getItem('@Auth.Data') || "{}");
-    if(data.id) {
+    const userData: UserModel = JSON.parse(localStorage.getItem('@Auth.Data') || "{}");
+    if(userData.id) {
       setIsAuthenticated(true);
-      setUserData(data);
-      user_api.defaults.headers.common.Authorization = `Basic ${data.token}`;
-      album_api.defaults.headers.common.Authorization = `Basic ${data.token}`;
+      setUserData(userData);
+      const userToken:string = JSON.parse(localStorage.getItem('@Auth.Token') || "{}");
+      user_api.defaults.headers.common.Authorization = `Basic ${userToken}`;
+      album_api.defaults.headers.common.Authorization = `Basic ${userToken}`;
     }
     //Logout();
   }, []);
@@ -46,16 +48,18 @@ export const AuthProvider: React.FC<Props> = ({children}) => {
       return respUserInfo.message;
     }
 
-    localStorage.setItem('@Auth.Data', JSON.stringify(respAuth.data));
+    localStorage.setItem('@Auth.Data', JSON.stringify(respUserInfo.data));
+    localStorage.setItem('@Auth.Token', JSON.stringify(respAuth.data.token));
     setUserData(respUserInfo.data);
     setIsAuthenticated(true);
   }, []);
 
   const Logout = useCallback(() => {
     localStorage.removeItem('@Auth.Data');
+    localStorage.removeItem('@Auth.Token');
     setUserData(undefined);
     setIsAuthenticated(false);
-    return <Navigate to='/' />;
+    return navigate("/");
   }, []);
 
   return (

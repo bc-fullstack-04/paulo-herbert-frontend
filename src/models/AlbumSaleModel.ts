@@ -1,5 +1,6 @@
-export interface AlbumSaleModel {
-    id?: number
+
+export interface AlbumSaleModel{
+    id?: string
     name: string
     idSpotify: string
     artistName: string

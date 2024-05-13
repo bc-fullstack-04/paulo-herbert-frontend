@@ -10,23 +10,25 @@ import { AuthProvider } from './context/AuthContext';
 import { PrivateRoutes } from './utils/PrivateRoutes';
 import { Landing } from './pages/Landing';
 import { Dashboard } from './pages/Dashboard';
+import { MyAlbums } from './pages/MyAlbums';
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.Fragment>
     <Toaster position='top-right' toastOptions={{ duration: 2000 }} />
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter >
+      <AuthProvider>
         <Routes>
-        <Route path='/' index element={<Landing />} />
-        <Route path='*' element={<ErrorPage />} />
-        <Route path='/signup' element={<Signup/>} />
-        <Route path='/login' element={<Login/>} /> 
-        <Route path='' element={<PrivateRoutes />}>
+          <Route path='/' errorElement={<ErrorPage/>} index element={<Landing />} />
+          <Route path='*' element={<ErrorPage />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='' element={<PrivateRoutes />}>
             <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/albums' element={<div>Teste</div>} />
-        </Route> 
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+            <Route path='/albums' element={<MyAlbums />} />
+          </Route>
+        </Routes >
+      </AuthProvider>
+    </BrowserRouter>
   </React.Fragment>
 )

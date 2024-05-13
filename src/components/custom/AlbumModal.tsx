@@ -48,11 +48,11 @@ export function AlbumModal({ children, album }: Props) {
                     setIsLoading(false);
                 })
         }
-        else{
+        else {
             toast.error("Album ja comprado");
             setIsLoading(false);
         }
-            
+
     }
 
     function albumAlreadyExists() {
@@ -78,7 +78,7 @@ export function AlbumModal({ children, album }: Props) {
                     </div>
                     {
                         isLoading ? <button disabled className="self-center bg-black text-2xl rounded-[40px] font-medium text-white px-20 py-1 max-w-64">Comprar</button>
-                        : <button onClick={handleBuyAlbum} className="self-center bg-[#FBBC05] text-2xl rounded-[40px] font-medium text-white px-20 py-1 max-w-64 transition duration-400">Comprar</button>
+                            : <button onClick={handleBuyAlbum} className="self-center bg-[#FBBC05] text-2xl rounded-[40px] font-medium text-white px-20 py-1 max-w-64 transition duration-400">Comprar</button>
 
                     }
                 </DialogHeader>
